@@ -1,0 +1,45 @@
+{
+  "project_name": "telecom-churn-prediction-azure-ml",
+  "course_reference": "Trabalhando com Machine Learning na Prática no Azure ML",
+  "simulation_note": "Dados ficticios e configuracao de endpoint modelada para entrega de portfolio sem ambiente ativo na nuvem.",
+  "dataset": {
+    "name": "clientes_telecom_ficticio.csv",
+    "records_count": 1000,
+    "target_column": "churn",
+    "task_type": "classification"
+  },
+  "endpoints": [
+    {
+      "name": "churn-telecom-online-endpoint",
+      "deployment_name": "blue-v1",
+      "endpoint_type": "managed_online",
+      "auth_mode": "key",
+      "scoring_uri": "https://churn-telecom-online-endpoint.brazilsouth.inference.ml.azure.com/score",
+      "registered_model": "automl-churn-best-model:1",
+      "primary_metric": "AUC_weighted",
+      "sample_request": {
+        "input_data": {
+          "columns": [
+            "meses_contrato",
+            "valor_mensal_brl",
+            "uso_dados_gb",
+            "chamados_suporte_90d",
+            "tipo_contrato"
+          ],
+          "index": [0, 1],
+          "data": [
+            [3, 149.9, 180, 4, "Mensal"],
+            [28, 99.9, 610, 0, "Anual"]
+          ]
+        }
+      },
+      "sample_response": {
+        "predictions": [1, 0],
+        "probabilities": [
+          [0.18, 0.82],
+          [0.91, 0.09]
+        ]
+      }
+    }
+  ]
+}
